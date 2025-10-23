@@ -25,14 +25,14 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         Host Machine                             │
-│                                                                   │
+│                         Host Machine                            │
+│                                                                 │
 │  ┌────────────────────────────────────────────────────────────┐ │
-│  │              Docker Compose Environment                     │ │
-│  │                                                              │ │
+│  │              Docker Compose Environment                    │ │
+│  │                                                            │ │
 │  │  ┌──────────────────────┐      ┌────────────────────────┐  │ │
-│  │  │   n8n Container       │      │  MCP Server Container  │  │ │
-│  │  │                       │      │                        │  │ │
+│  │  │   n8n Container       │      │  MCP Server Container │  │ │
+│  │  │                       │      │                       │  │ │
 │  │  │  ┌────────────────┐  │      │  ┌──────────────────┐  │  │ │
 │  │  │  │  n8n Engine    │  │      │  │  FastAPI App     │  │  │ │
 │  │  │  │  (Node.js)     │  │      │  │  (Python 3)      │  │  │ │
@@ -42,30 +42,30 @@
 │  │  │  │  Workflow DB   │  │      │  │  MCP Logic       │  │  │ │
 │  │  │  │  (SQLite)      │  │      │  │  (Endpoints)     │  │  │ │
 │  │  │  └────────────────┘  │      │  └──────────────────┘  │  │ │
-│  │  │                       │      │                        │  │ │
+│  │  │                       │      │                       │  │ │
 │  │  │  Port: 5678          │      │  Port: 8080            │  │ │
-│  │  └──────────┬────────────┘      └──────────┬─────────────┘  │ │
-│  │             │                              │                │ │
-│  │             └──────────┬───────────────────┘                │ │
-│  │                        │                                    │ │
-│  │                   ┌────▼────┐                               │ │
-│  │                   │ Bridge  │                               │ │
-│  │                   │ Network │                               │ │
-│  │                   └─────────┘                               │ │
-│  │                                                              │ │
-│  └──────────────────────────────────────────────────────────────┘ │
-│                                                                   │
+│  │  └──────────┬────────────┘      └──────────┬────────────┘  │ │
+│  │             │                              │               │ │
+│  │             └──────────┬───────────────────┘               │ │
+│  │                        │                                   │ │
+│  │                   ┌────▼────┐                              │ │
+│  │                   │ Bridge  │                              │ │
+│  │                   │ Network │                              │ │
+│  │                   └─────────┘                              │ │
+│  │                                                            │ │
+│  └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
 │  ┌────────────────────────────────────────────────────────────┐ │
-│  │                    Docker Volumes                           │ │
-│  │                                                              │ │
+│  │                    Docker Volumes                          │ │
+│  │                                                            │ │
 │  │  ┌─────────────────┐      ┌──────────────────────────┐     │ │
 │  │  │  n8n_data       │      │  ./workflows (bind)      │     │ │
 │  │  │  (named volume) │      │  (host directory)        │     │ │
 │  │  └─────────────────┘      └──────────────────────────┘     │ │
-│  └──────────────────────────────────────────────────────────────┘ │
+│  └────────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────┘
-          │                                     │
-          │                                     │
+          │                                    │
+          │                                    │
     ┌─────▼──────┐                       ┌─────▼──────┐
     │   Web      │                       │  Webhook   │
     │   Browser  │                       │  Client    │
@@ -75,10 +75,10 @@
 
 ### 1.2 Technology Stack
 
-| Layer | Component | Technology | Version | Purpose |
-|-------|-----------|-----------|---------|---------|
+| Layer             | Component | Technology | Version | Purpose |
+|-------------------|-----------|-----------|---------|---------|
 | **Orchestration** | Container Platform | Docker Engine | 20.10+ | Container runtime |
-| | Service Orchestration | Docker Compose | v2.0+ | Multi-container management |
+|       | Service Orchestration | Docker Compose | v2.0+ | Multi-container management |
 | **Application** | Workflow Engine | n8n | latest | Business logic automation |
 | | MCP Server | FastAPI | 0.104+ | AI protocol simulation |
 | **Runtime** | n8n Runtime | Node.js | 18.x | JavaScript execution |
