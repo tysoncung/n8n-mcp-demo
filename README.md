@@ -82,20 +82,30 @@ This repository contains a complete, production-ready demonstration of integrati
    # Both containers should show "Up" status
    ```
 
-5. **Access n8n**
+5. **Access n8n and create owner account**
    - Open browser to http://localhost:5678
-   - Login with credentials from `.env` (default: admin/admin)
+   - On first run, create an owner account with:
+     - Email: your-email@example.com
+     - First/Last name: Your Name
+     - Password: (choose a secure password)
+   - Login with your created credentials
 
 ## 📖 Usage
 
 ### Testing the MCP Integration
 
-1. **Activate the workflow**
-   - Navigate to "Workflows" in n8n UI
-   - Open "MCP Integration Demo"
-   - Click "Activate" toggle (top right)
+1. **Import the workflow**
+   - In n8n UI, click "Workflows" in left sidebar
+   - Click "+" or "Add Workflow"
+   - Click "⋮" (three dots) menu → "Import from file"
+   - Select `workflows/mcp-integration-demo.json` from the project directory
+   - The workflow will open in the editor
 
-2. **Test via Webhook**
+2. **Activate the workflow**
+   - Click "Activate" toggle in top right (should turn green/blue)
+   - Workflow is now ready to receive webhook requests
+
+3. **Test via Webhook**
    ```bash
    curl -X POST http://localhost:5678/webhook/mcp-demo \
      -H "Content-Type: application/json" \

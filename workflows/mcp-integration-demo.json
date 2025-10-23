@@ -3,6 +3,7 @@
   "nodes": [
     {
       "parameters": {
+        "httpMethod": "POST",
         "path": "mcp-demo",
         "responseMode": "responseNode",
         "options": {}
