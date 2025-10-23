@@ -16,9 +16,9 @@
     },
     {
       "parameters": {
+        "method": "POST",
         "url": "={{ $env.MCP_SERVER_URL }}/api/context",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "authentication": "none",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -37,7 +37,7 @@
           "parameters": [
             {
               "name": "text",
-              "value": "={{ $json.query }}"
+              "value": "={{ $json.body.query }}"
             }
           ]
         },
@@ -68,9 +68,9 @@
     },
     {
       "parameters": {
+        "method": "POST",
         "url": "={{ $env.MCP_SERVER_URL }}/api/execute",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "authentication": "none",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
