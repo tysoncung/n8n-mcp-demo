@@ -2,9 +2,18 @@
 
 > A cross-platform demonstration of n8n workflow automation integrated with Model Context Protocol (MCP) using Docker containerization.
 
-[![Docker](https://img.shields.io/badge/Docker-20.10+-blue.svg)](https://www.docker.com/)
-[![n8n](https://img.shields.io/badge/n8n-latest-orange.svg)](https://n8n.io/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Docker](https://img.shields.io/badge/Docker-20.10+-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![n8n](https://img.shields.io/badge/n8n-latest-EA4B71?style=flat&logo=n8n&logoColor=white)](https://n8n.io/)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.119+-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/tysoncung/n8n-mcp-demo?style=flat&logo=github)](https://github.com/tysoncung/n8n-mcp-demo/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/tysoncung/n8n-mcp-demo?style=flat&logo=github)](https://github.com/tysoncung/n8n-mcp-demo/network/members)
+[![GitHub Issues](https://img.shields.io/github/issues/tysoncung/n8n-mcp-demo?style=flat&logo=github)](https://github.com/tysoncung/n8n-mcp-demo/issues)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/tysoncung/n8n-mcp-demo?style=flat&logo=github)](https://github.com/tysoncung/n8n-mcp-demo/commits/master)
+[![Docker Compose](https://img.shields.io/badge/Docker_Compose-v2.0+-2496ED?style=flat&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+[![Maintenance](https://img.shields.io/badge/Maintained-yes-green.svg?style=flat)](https://github.com/tysoncung/n8n-mcp-demo/graphs/commit-activity)
 
 ## 📋 Overview
 
