@@ -1,0 +1,127 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n-mcp-demo
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD:-admin}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=${N8N_PROTOCOL:-http}
+      - NODE_ENV=production
+      - WEBHOOK_URL=${WEBHOOK_URL:-http://localhost:5678/}
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-America/New_York}
+      # MCP Configuration
+      - MCP_SERVER_URL=${MCP_SERVER_URL:-http://mcp-server:8080}
+      - MCP_API_KEY=${MCP_API_KEY:-demo-key}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./workflows:/home/node/.n8n/workflows
+      - ./config:/home/node/.n8n/config
+    networks:
+      - n8n-mcp-network
+    depends_on:
+      - mcp-server
+
+  mcp-server:
+    image: alpine:latest
+    container_name: mcp-server-demo
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    command: >
+      sh -c "
+        apk add --no-cache python3 py3-pip &&
+        pip3 install --no-cache-dir fastapi uvicorn &&
+        cat > /app/server.py << 'EOF'
+      import json
+      from datetime import datetime
+      from fastapi import FastAPI, Header, HTTPException
+      from typing import Optional
+
+      app = FastAPI(title='MCP Demo Server')
+
+      @app.get('/health')
+      async def health():
+          return {'status': 'healthy', 'timestamp': datetime.now().isoformat()}
+
+      @app.post('/api/context')
+      async def get_context(
+          query: dict,
+          x_api_key: Optional[str] = Header(None)
+      ):
+          if x_api_key != 'demo-key':
+              raise HTTPException(status_code=401, detail='Invalid API key')
+
+          # Simulate MCP context retrieval
+          context = {
+              'query': query.get('text', ''),
+              'timestamp': datetime.now().isoformat(),
+              'context_items': [
+                  {
+                      'source': 'knowledge_base',
+                      'content': 'This is simulated context from MCP',
+                      'relevance': 0.95
+                  },
+                  {
+                      'source': 'documents',
+                      'content': 'Additional context information',
+                      'relevance': 0.87
+                  }
+              ],
+              'metadata': {
+                  'model': 'mcp-demo-v1',
+                  'tokens_used': 150
+              }
+          }
+          return context
+
+      @app.post('/api/execute')
+      async def execute_action(
+          action: dict,
+          x_api_key: Optional[str] = Header(None)
+      ):
+          if x_api_key != 'demo-key':
+              raise HTTPException(status_code=401, detail='Invalid API key')
+
+          # Simulate MCP action execution
+          result = {
+              'action': action.get('type', 'unknown'),
+              'status': 'completed',
+              'timestamp': datetime.now().isoformat(),
+              'result': {
+                  'success': True,
+                  'message': f\"Action {action.get('type')} executed successfully\",
+                  'data': action.get('parameters', {})
+              }
+          }
+          return result
+
+      if __name__ == '__main__':
+          import uvicorn
+          uvicorn.run(app, host='0.0.0.0', port=8080)
+      EOF
+      mkdir -p /app &&
+      python3 /app/server.py
+      "
+    networks:
+      - n8n-mcp-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  n8n_data:
+    driver: local
+
+networks:
+  n8n-mcp-network:
+    driver: bridge
